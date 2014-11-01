@@ -1,6 +1,6 @@
 import requests
 
-access_token = "bNp6k4DquijfjRDZ1TZ3OIh9KY9KkH" 
+access_token = "1INOKIFjD8v6Lv1Swf2qgdOAWmBNhC"
 
 def get_access_token():
 	r = requests.post("https://api.clarifai.com/v1/token/?grant_type=client_credentials&client_id=urXuu-oV3NBj4WL8WUW37cPWlc1qDImDndJeDCc-&client_secret=LVqjz3Jhjb3xrM1IktglejjXLHZ-9e5QLJknvZAQ")
@@ -11,9 +11,12 @@ def get_tags(url):
 	global access_token
 	r = requests.get('https://api.clarifai.com/v1/tag/?url='+url+'&access_token='+access_token)
 	if r.status_code != 200:
-		access_token = get_access_token()
-		return get_tags(url)
-
+		if r.status_code == 401:
+			access_token = get_access_token()
+			return get_tags(url)	
+		print "Error: " + r.json()['results'][0]['result']['error']
+		return None
+		
 	d = extract_tags_dict(r.json())
 
 	return d
@@ -22,16 +25,17 @@ def get_tags(url):
 def get_tags_from_file(filename):
 	global access_token
 	files = {'encoded_image': open(filename, 'rb')}
-	r = requests.post('https://api.clarifai.com/v1/tag/?access_token='+access_token, files=files)
-
+	r = requests.post('https://api.clarifai.com/v1/tag/?access_token=' + access_token, files=files)
 	if r.status_code != 200:
-		access_token = get_access_token()
-		return get_tags(filename)
+		if r.status_code == 401:
+			access_token = get_access_token()
+			return get_tags_from_file(filename)
+		print "Error: " + r.json()['results'][0]['result']['error']
+		return None
 
 	d = extract_tags_dict(r.json())
 
 	return d
-
 
 def extract_tags_dict(obj):
 	data = obj['results'][0]['result']['tag']
@@ -40,10 +44,3 @@ def extract_tags_dict(obj):
 	return dict(zip(tags, probs))
 
 
-result = get_tags_from_file('frame120.png')
-
-
-for key in result:
-	print key, ":", result[key]
-
-#print get_tags('http://static.shop033.com//resources/18/160536/Image/white-cat-blue-eyes-640x360.jpg')
