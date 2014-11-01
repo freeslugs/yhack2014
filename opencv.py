@@ -1,5 +1,6 @@
 import numpy as np
 import cv2
+import clarifai
 
 cap = cv2.VideoCapture('test.mov')
 
@@ -10,11 +11,19 @@ while(cap.isOpened()):
     if frame == None:
     	break
 
+    # todo: get number of frames per second
     if i % 60 == 0:
-	    cv2.imwrite("frame" + str(i) + ".png",frame)
-	    if cv2.waitKey(1) & 0xFF == ord('q'):
-	        break
-    i = i + 1
+		height, width = frame.shape[:2]
+		if width > 1024:
+			# print width
+			scale = 1024 / float(width)
+			# print scale
+			img = cv2.resize(frame,None,fx=scale, fy=scale, interpolation = cv2.INTER_CUBIC)
+			# print img.shape[:2]
+		else:
+			img = frame
+		filename = "frame" + str(i) + ".png"
+		cv2.imwrite(filename, img)
+		print clarifai.get_tags_from_file(filename)
 
-cap.release()
-# cv2.destroyAllWindows()
+    i = i + 1
