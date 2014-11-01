@@ -1,25 +1,4 @@
 $(function() {
-	var rawData1 = [];
-	var rawData2 = [];
-
-	for (var i = 0; i < 100; i++) {
-		var x = Math.random() * 180;
-		var y = Math.random();
-		rawData1[i] = {
-			"x": x,
-			"y": y
-		};
-	}
-
-	for (var i = 0; i < 100; i++) {
-		var x = Math.random() * 180;
-		var y = Math.random();
-		rawData2[i] = {
-			"x": x,
-			"y": y
-		};
-	}
-
 	// Sort scaled data
 	function sortByX(a, b) {
 		if (a.x > b.x) {
@@ -31,7 +10,19 @@ $(function() {
 		return 0;
 	}
 
-	function getSeriesForTag(arr, word) {
+	function getAllWords(arr) {
+		result = []
+		for (frame in arr) {
+			for (word in arr[frame]) {
+				if (_.indexOf(result, word) < 0) {
+					result.push(word);
+				}
+			}
+		}
+		return result;
+	}
+
+	function makeSeries(arr, word) {
 		var data = [];
 		for (frame = 0; frame < arr.length; frame++) {
 			obj = arr[frame];
@@ -46,6 +37,7 @@ $(function() {
 			"name": word,
 			"data": data 
 		}
+		return series;
 	}
 
 	$.get("/api/movie-list", function(data) {
