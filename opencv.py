@@ -18,3 +18,7 @@ while(cap.isOpened()):
 
 cap.release()
 # cv2.destroyAllWindows()
+
+# gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+# cv2.imshow('frame',gray)
