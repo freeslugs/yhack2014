@@ -37,7 +37,7 @@ $(function() {
 			obj = arr[frame];
 			if(word in obj) {
 				data.push({
-					"x": _.indexOf(arr, obj) * 0.05,
+					"x": Math.floor(_.indexOf(arr, obj) * 3.3333333)/100,
 					"y": obj[word]
 				});
 			}
@@ -48,20 +48,66 @@ $(function() {
 		}
 	}
 
-	$.get("/api/get-tags", function(data) {
+	$.get("/api/movie-list", function(data) {
+		for (each in data) {
+			$("#movie-list").append("<li role=\"presentation\"><a role=\"menuitem\" class=\"movie-option\" tabindex=\"-1\">"+data[each]+"</a></li>")	
+		}
+	});
+
+	$("#movie-list").on("click", "a", function(){
+		$.get("/api/tags", $(this).text(), function(data) {
+			var allWords = getAllWords(data);
+			seriesArray = [];
+			for(word in allWords){
+				series = makeSeries(data, allWords[word]);
+				seriesArray.push(series);
+			}
+			$('#chart').empty();
+			$('#chart').highcharts({
+				chart: {
+					zoomType: 'xy',
+					type: 'spline'
+				},
+				title: {
+					text: ''
+				},
+				xAxis: {
+					title: {
+						text: 'Minute'
+					}
+				},
+				yAxis: {
+					title: {
+						text: 'Probability'
+					}
+				},
+				series: seriesArray,
+				legend: {
+					align: "right",
+					layout: "vertical",
+					verticalAlign: "top"
+				},
+				tooltip: {
+					valueDecimals: 4
+				}
+			});
+		});
+	})
+
+	$.get("/api/tags", function(data) {
 		var allWords = getAllWords(data);
 		seriesArray = [];
 		for(word in allWords){
 			series = makeSeries(data, allWords[word]);
 			seriesArray.push(series);
 		}
-		console.log(seriesArray);
 		$('#chart').highcharts({
 			chart: {
+				zoomType: 'xy',
 				type: 'spline'
 			},
 			title: {
-				text: 'Terms in The Godfather'
+				text: ''
 			},
 			xAxis: {
 				title: {
@@ -73,7 +119,15 @@ $(function() {
 					text: 'Probability'
 				}
 			},
-			series: seriesArray
+			series: seriesArray,
+			legend: {
+				align: "right",
+				layout: "vertical",
+				verticalAlign: "top"
+			},
+			tooltip: {
+				valueDecimals: 4
+			}
 		});
 	});
 });

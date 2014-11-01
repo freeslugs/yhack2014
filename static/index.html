@@ -1,16 +1,34 @@
 <html>
-	<head>
-		<!--Bootstrap CSS--> <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-							 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
-	</head>
-	<body>
-		<h1>Watch It For Me</h1>
-		<div id="chart" style="width:100%; height:800px;"></div>
-		<!-- _          --> <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
-		<!-- jquery     -->	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
-		<!-- HighCharts --> <script src="http://code.highcharts.com/highcharts.js"></script>
-		<!-- D3         -->	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-		<!-- Bootstrap  -->	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-		<!-- Custom     -->	<script src="static/main.js"></script>
-	</body>
+<head>
+	<!-- Bootstrap CSS --> <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
+	<!-- Custom 	   --> <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+	<div class="container-fluid">
+		<h1> Movie Analytics </h1>
+		<div class="row col-md-8 col-md-offset-2">
+		<div id="buttons">
+			<div class="dropdown" id="select-div">
+				<button class="btn btn-primary dropdown-toggle" type="button" id="select-movie" data-toggle="dropdown">
+					Select Movie
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" role="menu" id="movie-list" aria-labelledby="select-movie">
+				</ul>
+			</div>
+			<div id="upload-div">
+			<button class="btn btn-primary" tabindex="-1" type="button" id="upload-movie">Upload your own</button>
+			</div>
+		</div>
+		</div>
+		<div id="chart" class="col-md-10 col-md-offset-1"></div>
+	</div>
+	<!-- _          --> <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+	<!-- jquery     -->	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<!-- HighCharts --> <script src="http://code.highcharts.com/highcharts.js"></script>
+	<!-- D3         -->	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<!-- Bootstrap  -->	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+	<!-- Custom     -->	<script src="static/main.js"></script>
+</body>
 </html>
