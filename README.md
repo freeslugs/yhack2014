@@ -11,3 +11,4 @@ yhack2014
 1. active virtual env
   1. `source venv/bin/activate`
 1. install requirements
+  1. `pip install -r requirements.txt`
