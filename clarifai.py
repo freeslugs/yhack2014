@@ -42,3 +42,5 @@ def extract_tags_dict(obj):
 	tags = data['classes']
 	probs = data['probs']
 	return dict(zip(tags, probs))
+
+
