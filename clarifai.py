@@ -14,14 +14,36 @@ def get_tags(url):
 		access_token = get_access_token()
 		return get_tags(url)
 
-	data = r.json()['results'][0]['result']['tag']
-	tags = data['classes']
-	probs = data['probs']
-	d = dict(zip(tags, probs))
-
-	for key in d:
-		print key, ":", d[key]
+	d = extract_tags_dict(r.json())
 
 	return d
 
-# print get_tags('http://static.shop033.com//resources/18/160536/Image/white-cat-blue-eyes-640x360.jpg')
+
+def get_tags_from_file(filename):
+	global access_token
+	files = {'encoded_image': open(filename, 'rb')}
+	r = requests.post('https://api.clarifai.com/v1/tag/?access_token='+access_token, files=files)
+
+	if r.status_code != 200:
+		access_token = get_access_token()
+		return get_tags(filename)
+
+	d = extract_tags_dict(r.json())
+
+	return d
+
+
+def extract_tags_dict(obj):
+	data = obj['results'][0]['result']['tag']
+	tags = data['classes']
+	probs = data['probs']
+	return dict(zip(tags, probs))
+
+
+result = get_tags_from_file('frame120.png')
+
+
+for key in result:
+	print key, ":", result[key]
+
+#print get_tags('http://static.shop033.com//resources/18/160536/Image/white-cat-blue-eyes-640x360.jpg')
