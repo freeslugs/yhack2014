@@ -1,59 +1,76 @@
-// Generate random data
-var rawData = [];
+$(function() {
+	var rawData1 = [];
+	var rawData2 = [];
 
-for (var i = 0; i < 100; i++) {
-	var x = Math.floor(Math.random() * 10000);
-	var y = Math.floor(Math.random() * 10000);
-	rawData[i] = {
-		"x": x,
-		"y": y
-	};
-}
-
-
-// Scale random data 
-var xScale = d3.scale.linear()
-					.domain([d3.min(rawData, function(d) { return d.x; }), d3.max(rawData, function(d) { return d.x; })])
-					.range([0, 1000]);
-
-var yScale = d3.scale.linear()
-					.domain([d3.min(rawData, function(d) { return d.y; }), d3.max(rawData, function(d) { return d.y; })])
-					.range([0, 500]);
-
-var scaledData = [];
-
-for (var i = 0; i < rawData.length; i++) {
-	scaledData[i] = {"x": xScale(rawData[i].x), "y": yScale(rawData[i].y)};
-}
-
-
-// Sort scaled data
-function sortByX(a, b) {
-	if (a.x > b.x) {
-		return 1;
+	for (var i = 0; i < 100; i++) {
+		var x = Math.random() * 180;
+		var y = Math.random();
+		rawData1[i] = {
+			"x": x,
+			"y": y
+		};
 	}
-	if (a.x < b.x) {
-		return -1;
+
+	for (var i = 0; i < 100; i++) {
+		var x = Math.random() * 180;
+		var y = Math.random();
+		rawData2[i] = {
+			"x": x,
+			"y": y
+		};
 	}
-	return 0;
-}
 
-scaledData.sort(sortByX);
+	// Sort scaled data
+	function sortByX(a, b) {
+		if (a.x > b.x) {
+			return 1;
+		}
+		if (a.x < b.x) {
+			return -1;
+		}
+		return 0;
+	}
 
+	function getSeriesForTag(arr, word) {
+		data = [];
+		for (frame = 0; frame < arr.length; frame++) {
+			obj = arr[frame];
+			if(obj[word]) {
+				data[i] = {
+					"name": word,
+					"x": i * 0.05,
+					"y": obj[word]
+				};
+			}
+		}
+	}
 
-// Make line graph, add to DOM.
-var lineFunction = d3.svg.line()
-						 .x(function(d){ return d.x; })
-						 .y(function(d){ return d.y; })
-						 .interpolate("basis-open");
+	rawData1.sort(sortByX);
+	rawData2.sort(sortByX);
 
-var svg_canvas = d3.select("body")
-			.append("svg")
-			.attr("height", "500")
-			.attr("width", "1000");
-
-var lineGraph = svg_canvas.append("path")
-						  .attr("d", lineFunction(scaledData))
-						  .attr("stroke", "blue")
-						  .attr("stroke-width", 2)
-						  .attr("fill", "none"); 
+	$('#container').highcharts({
+		chart: {
+			type: 'line'
+		},
+		title: {
+			text: 'Terms in The Godfather'
+		},
+		xAxis: {
+			title: {
+				text: 'Minute'
+			}
+		},
+		yAxis: {
+			title: {
+				text: 'Fruit eaten'
+			}
+		},
+		series: [{
+			name: 'Man',
+			data: rawData1
+		}, {
+			name: 'Pineapple',
+			data: rawData2
+		}]
+	});
+});
