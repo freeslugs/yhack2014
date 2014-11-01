@@ -35,11 +35,11 @@ $(function() {
 		var data = [];
 		for (frame = 0; frame < arr.length; frame++) {
 			obj = arr[frame];
-			if(obj[word]) {
-				data[i] = {
-					"x": i * 0.05,
+			if(word in obj) {
+				data.push({
+					"x": _.indexOf(arr, obj) * 0.05,
 					"y": obj[word]
-				};
+				});
 			}
 		}
 		var series = {
@@ -48,32 +48,32 @@ $(function() {
 		}
 	}
 
-	rawData1.sort(sortByX);
-	rawData2.sort(sortByX);
-
-	$('#container').highcharts({
-		chart: {
-			type: 'line'
-		},
-		title: {
-			text: 'Terms in The Godfather'
-		},
-		xAxis: {
+	$.get("/api/get-tags", function(data) {
+		var allWords = getAllWords(data);
+		seriesArray = [];
+		for(word in allWords){
+			series = makeSeries(data, allWords[word]);
+			seriesArray.push(series);
+		}
+		console.log(seriesArray);
+		$('#chart').highcharts({
+			chart: {
+				type: 'spline'
+			},
 			title: {
-				text: 'Minute'
-			}
-		},
-		yAxis: {
-			title: {
-				text: 'Fruit eaten'
-			}
-		},
-		series: [{
-			name: 'Man',
-			data: rawData1
-		}, {
-			name: 'Pineapple',
-			data: rawData2
-		}]
+				text: 'Terms in The Godfather'
+			},
+			xAxis: {
+				title: {
+					text: 'Minute'
+				}
+			},
+			yAxis: {
+				title: {
+					text: 'Probability'
+				}
+			},
+			series: seriesArray
+		});
 	});
 });
