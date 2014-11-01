@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from flask import Flask
+from flask import Flask, request
 from flask.ext import restful
 from flask.ext.mongoengine import *
 from mongoengine import *
@@ -15,9 +15,6 @@ connect('yhacks', host='mongodb://admin:columbia@ds047940.mongolab.com:47940/yha
 #app.config.from_pyfile('settings.py')
 
 api = restful.Api(app)
-app.debug = True
-
-app.config.from_pyfile('settings.py')
 
 db = MongoEngine(app)
 
