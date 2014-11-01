@@ -32,16 +32,19 @@ $(function() {
 	}
 
 	function getSeriesForTag(arr, word) {
-		data = [];
+		var data = [];
 		for (frame = 0; frame < arr.length; frame++) {
 			obj = arr[frame];
 			if(obj[word]) {
 				data[i] = {
-					"name": word,
 					"x": i * 0.05,
 					"y": obj[word]
 				};
 			}
+		}
+		var series = {
+			"name": word,
+			"data": data 
 		}
 	}
 
