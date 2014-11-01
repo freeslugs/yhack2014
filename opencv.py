@@ -1,15 +1,17 @@
 import numpy as np
 import cv2
+from cv2.cv import CV_CAP_PROP_FPS
+
 import clarifai
 
 
-def extract_tags(filename, interval=2, FPS=30):
+def extract_tags(filename, interval=2):
 	""" Return the tags in the movie in filename
 	interval -- interval between frames in seconds
-	FPS -- frame per second
 	"""
 	cap = cv2.VideoCapture(filename)
-	frame_interval = interval * FPS
+	FPS = cap.get(CV_CAP_PROP_FPS)
+	frame_interval = int(round(interval * FPS))
 	frames = []
 
 	i = 0
@@ -27,10 +29,10 @@ def extract_tags(filename, interval=2, FPS=30):
 				# print img.shape[:2]
 			else:
 				img = frame
-			img_name = "frame" + str(i) + ".png"
+			img_name = "temp.png"
 			cv2.imwrite(img_name, img)
 			tags = clarifai.get_tags_from_file(img_name)
-			tags['frame'] = i
+			#tags['frame'] = i
 
 			frames.append(tags)
 
