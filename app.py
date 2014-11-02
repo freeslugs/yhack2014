@@ -14,6 +14,11 @@ import json
 app = Flask(__name__)
 cors = CORS(app)
 
+
+server_url = "localhost:5000"
+# server_url = "mooview.ngrok.com"
+
+
 UPLOAD_FOLDER = './movies'
 ALLOWED_EXTENSIONS = set(['mp4', 'avi', 'mov'])
 
@@ -45,7 +50,7 @@ def upload_file():
                 print request.form['name']
                 print filename
                 upload.upload(request.form['name'], os.path.join(app.config['UPLOAD_FOLDER'], filename), 2)
-                return redirect("localhost:5000/?notice=upload-success")
+                return redirect(server_url + "/?notice=upload-success")
 			#url = "http://localhost:8080/api/add-movie"
 			#data = { 'name': request.form['name'], 'filename': filename, 'interval': 10, 'upload': True }
 			#headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}

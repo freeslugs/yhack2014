@@ -58,7 +58,9 @@ $(function() {
 	});
 
 	$("#movie-list").on("click", "a", function(){
-		$.get("/api/get-movie?name=" + $(this).text(), function(data) {
+		var text = $(this).text();
+		$.get("/api/get-movie?name=" + text, function(data) {
+			$("#chart-title").text(text);
 			var allWords = getAllWords(data);
 			seriesArray = [];
 			for(word in allWords){
@@ -73,7 +75,7 @@ $(function() {
 					backgroundColor: '#ecf0f1'
 				},
 				title: {
-					text: ''
+					text: text
 				},
 				xAxis: {
 					title: {
@@ -83,7 +85,8 @@ $(function() {
 				yAxis: {
 					title: {
 						text: 'Probability'
-					}
+					},
+					min: 0
 				},
 				series: seriesArray,
 				legend: {
