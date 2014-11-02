@@ -73,7 +73,7 @@ $(function() {
 		}
 	});
 
-	$("#upload-movie").click(function ()) {
+	$("#upload-movie").click(function() {
 		$("#upload-movie").hide();
 		$("#loading").show();	
 	})
