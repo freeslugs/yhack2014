@@ -108,4 +108,4 @@ api.add_resource(MovieList, "/api/movie-list")
 api.add_resource(Tags, "/api/tags")
 
 if __name__ == "__main__":
-	app.run(port=8080)
+	app.run()
