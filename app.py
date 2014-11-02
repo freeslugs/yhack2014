@@ -38,6 +38,15 @@ class GetMovie(restful.Resource):
 		except models.Movie.DoesNotExist:
 			return {"error": "Movie was not found."}
 
+class GetMovies(restful.Resource):
+	def get(self):
+		ret = []
+		movies =  models.Movie.objects()
+		for movie in movies:
+			ret.append(movie.name)
+		return ret
+
+
 class AddMovie(restful.Resource):
 	def post(self):
 		try:
@@ -50,16 +59,13 @@ class AddMovie(restful.Resource):
 			error = e.message + ' not specified'
 			return {"error": error}
 		except models.Movie.DoesNotExist:
-			import opencv
-			try:
-				images = opencv.extract_tags(filename, interval)
-				movie = models.Movie(name=name, imgs=opencv.extract_tags(filename, interval)).save()
-				return movie.imgs
-			except Exception, e:
-				return {'error': str(e)}
+			import upload
+			upload.upload(name, filename, interval)
+			return {"Success": "Request submitted"}
 		return {"error": "Movie already exists"}
 
 api.add_resource(GetMovie, "/api/get-movie")
+api.add_resource(GetMovies, "/api/movies")
 api.add_resource(AddMovie, "/api/add-movie")
 
 if __name__ == "__main__":
