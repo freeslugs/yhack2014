@@ -10,8 +10,8 @@ $(function() {
 
 
 	if(getParameterByName('notice')) {
-		// $('#myModal').modal('show');
-		alert("we received your video, and it will be available shortly.")
+		$('#myModal').modal('show');
+		// alert("we received your video, and it will be available shortly.")
 	}
 
 	function getParameterByName(name) {
