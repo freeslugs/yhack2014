@@ -7,7 +7,7 @@ def remove_outliers(imgs, tolerance=10):
 			if key in tags:
 				# add probability to total
 				tags[key] += img[key]
-			else:
+			elif key != "blur" and key != "shadow" and key != "one":
 				tags[key] = img[key]
 
 	top = dict(sorted(tags.iteritems(), key=operator.itemgetter(1), reverse=True)[:tolerance])
