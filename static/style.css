@@ -69,11 +69,15 @@
 #search-app .dropdown, #upload, #upload input {
 	display: inline;
 }
-#upload {
-	padding-left: 30px;
-}
 #upload input[name='name'] {
 	max-width: 200px;
+}
+#tags-app {
+	display: inline-block;
+}
+#tags-app input {
+	max-width: 200px;
+	display: inline-block;
 }
 
 #chart {
