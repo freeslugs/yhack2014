@@ -1,12 +1,11 @@
 import opencv
 import models
+import subprocess
 
 def upload(name, filename, interval):
+	activate_venv = ". /home/lekez2005/Desktop/yhack/yhack2014/venv/bin/activate;"
 
-	try:
-		images = opencv.extract_tags(filename, interval)
-		movie = models.Movie(name=name, imgs=opencv.extract_tags(filename, interval)).save()
-		return movie.imgs
-	except Exception, e:
-		return {'error': str(e)}
+	#command = "'import opencv;opencv.create_movie('"+name +"', '" +filename+"', "+str(interval)+")'"
+	subprocess.Popen(['/home/lekez2005/Desktop/yhack/yhack2014/venv/bin/python', 'opencv.py', name,
+					 filename, str(interval)])
 

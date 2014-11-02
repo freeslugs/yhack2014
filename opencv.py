@@ -4,7 +4,7 @@ import cv2
 from cv2.cv import CV_CAP_PROP_FPS, CV_CAP_PROP_POS_MSEC
 import clarifai
 
-def extract_tags(filename, interval=2):
+def extract_tags(filename, interval=10):
 	""" Return the tags in the movie in filename
 	interval -- interval between frames in seconds
 	"""
@@ -13,6 +13,7 @@ def extract_tags(filename, interval=2):
 	frame_interval = int(round(interval * FPS))
 	imgs = []
 	ten_mins = int(round(FPS))*60*10
+	img_name = str(uuid.uuid1()) + ".png"
 	i = 0
 	while (cap.isOpened()):
 		ret, frame = cap.read()
@@ -28,7 +29,6 @@ def extract_tags(filename, interval=2):
 				img = cv2.resize(frame, None, fx=scale, fy=scale, interpolation=cv2.INTER_CUBIC)
 			else:
 				img = frame
-			img_name = uuid.uuid1() + ".png"
 			cv2.imwrite(img_name, img)
 			try:
 				tags = clarifai.get_tags_from_file(img_name)
@@ -40,3 +40,12 @@ def extract_tags(filename, interval=2):
 
 	cap.release()
 	return imgs
+
+def create_movie(argv):
+	import models
+	images = extract_tags(argv[1], int(argv[2]))
+	movie = models.Movie(name=argv[0], imgs=images).save()
+
+import sys
+if __name__ == "__main__":
+   create_movie(sys.argv[1:])
