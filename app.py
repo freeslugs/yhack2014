@@ -65,7 +65,11 @@ class AddMovie(restful.Resource):
 
 class MovieList(restful.Resource):
 	def get(self):
-		return ["The Godfather", "The Lord of the Rings", "Shrek"]
+		names = []
+		movies =  models.Movie.objects()
+		for movie in movies:
+			names.append(movie.name)
+		return names
 
 api.add_resource(GetMovie, "/api/get-movie")
 api.add_resource(AddMovie, "/api/add-movie")
