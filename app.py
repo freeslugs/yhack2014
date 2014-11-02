@@ -70,10 +70,17 @@ class MovieList(restful.Resource):
 		for movie in movies:
 			names.append(movie.name)
 		return names
+  
+class Tags(restful.Resource):
+    def get(self):
+        tag = request.args.get('tag', '')
+        import analyze
+        return analyze.get_tag(tag)
 
 api.add_resource(GetMovie, "/api/get-movie")
 api.add_resource(AddMovie, "/api/add-movie")
 api.add_resource(MovieList, "/api/movie-list")
+api.add_resource(Tags, "/api/tags")
 
 if __name__ == "__main__":
-	app.run()
+	app.run(port=8080)
