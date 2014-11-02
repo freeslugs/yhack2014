@@ -2,7 +2,7 @@
 
 from flask import Flask, request
 from flask.ext import restful
-from flask.ext.mongoengine import *
+from flask.ext.mongoengine import MongoEngine
 from mongoengine import *
 from flask.ext.cors import CORS, cross_origin
 import models #import Movie, Image
@@ -36,7 +36,9 @@ class GetMovie(restful.Resource):
 		except:
 			return {"error": "Missing name of movie."}
 		try:
-			return models.Movie.objects.get(name=name).imgs
+			import analyze
+			imgs = models.Movie.objects.get(name=name).imgs
+			return analyze.remove_outliers(imgs)
 		except models.Movie.DoesNotExist:
 			return {"error": "Movie was not found."}
 
