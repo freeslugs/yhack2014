@@ -41,11 +41,16 @@ def upload_file():
 		if file and allowed_file(file.filename):
 			filename = secure_filename(file.filename)
 			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-			url = "http://localhost:5000/api/add-movie"
-			data = { 'name': request.form['name'], 'filename': filename, 'interval': 10, 'upload': True }
-			headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
-			r = requests.post(url, data=json.dumps(data), headers=headers)
-			return "success"
+                import upload
+                print request.form['name']
+                print filename
+                upload.upload(request.form['name'], os.path.join(app.config['UPLOAD_FOLDER'], filename), 2)
+                return "Request submitted"
+			#url = "http://localhost:8080/api/add-movie"
+			#data = { 'name': request.form['name'], 'filename': filename, 'interval': 10, 'upload': True }
+			#headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+			#return requests.post(url, data=json.dumps(data), headers=headers)
+			#return "success"
     return app.send_static_file("index.html")
 
 @app.route('/movies/<filename>')
@@ -78,13 +83,9 @@ class AddMovie(restful.Resource):
 			error = e.message + ' not specified'
 			return {"error": error}
 		except models.Movie.DoesNotExist:
-			import opencv
-			try:
-				images = opencv.extract_tags(filename, interval)
-				movie = models.Movie(name=name, imgs=opencv.extract_tags(filename, interval)).save()
-				return movie.imgs
-			except Exception, e:
-				return {'error': str(e)}
+			import upload
+			upload.upload(name, filename, interval)
+			return {"Success": "Request submitted"}
 		return {"error": "Movie already exists"}
 
 class MovieList(restful.Resource):
