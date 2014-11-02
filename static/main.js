@@ -1,4 +1,13 @@
 $(function() {
+
+	$("#app").hide()
+	
+	$("#party-button").click(function () {
+		$("#landing-page").hide()
+		$("#app").show()
+	})
+
+
 	// Sort scaled data
 	function sortByX(a, b) {
 		if (a.x > b.x) {
@@ -60,7 +69,8 @@ $(function() {
 			$('#chart').highcharts({
 				chart: {
 					zoomType: 'xy',
-					type: 'spline'
+					type: 'spline',
+					backgroundColor: '#ecf0f1'
 				},
 				title: {
 					text: ''

@@ -1,32 +1,55 @@
 <html>
 <head>
+	<link href='http://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'>
 	<!-- Bootstrap CSS --> <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
 	<!-- Custom 	   --> <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
-	<div class="container-fluid">
-		<h1> Movie Analytics </h1>
-		<div class="row col-md-8 col-md-offset-2">
-		<div id="buttons">
-			<div class="dropdown" id="select-div">
+	<div id="main-container" class="container-fluid">
+
+	<div id="landing-page">
+
+		<div id="big-text-container">
+			<h1 class="blue"><img src="static/cow.png"> Mooview</h1>	
+			<h3 class="gray">Interactive Anayltics with Computer Vision</h3>
+			<button type="button" class="btn btn-primary btn-lg text-center" id="party-button">Let's Party!</button>
+		</div>
+
+		<div class="row" id="benefits-row">
+			<div class="col-md-4">.col-md-1</div>
+			<div class="col-md-4">.col-md-1</div>
+			<div class="col-md-4">.col-md-1</div>
+		</div>
+
+	</div>
+
+	<div id="app">
+		
+		<span id="logo"><h2 class="blue"><img src="static/cow.png"> Mooview</h2></span>
+
+		<!-- <div class="row col-md-8 col-md-offset-2"> -->
+		<div id="search-app">
+			<div class="dropdown" id="select-div"> 
 				<button class="btn btn-primary dropdown-toggle" type="button" id="select-movie" data-toggle="dropdown">
-					Select Movie
+					Select Moovie
 					<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu" role="menu" id="movie-list" aria-labelledby="select-movie">
 				</ul>
 			</div>
-			<div id="upload-div">
-			<form action="" method=post enctype=multipart/form-data>
-			<input type=file name=file>
-			<input type="text" name=name>
-		 	<input type=submit class="btn btn-primary" tabindex="-1" type="button" id="upload-movie">Upload your own
+			<form id="upload" action="" method=post enctype=multipart/form-data>
+				Name: <input type="text" class="form-control" name=name>
+				Select File: <span class="btn btn-default btn-file"><input type=file name=file></span>
+			 	<input type=submit class="btn btn-primary" tabindex="-1" type="button" id="upload-movie" value="Upload">
 			</form>
-			</div>
+		<!-- </div> -->
 		</div>
-		</div>
-		<div id="chart" class="col-md-10 col-md-offset-1"></div>
+		<div id="chart"></div>
+
+
+	</div>
+
 	</div>
 	<!-- _          --> <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
 	<!-- jquery     -->	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
