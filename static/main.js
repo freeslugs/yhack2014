@@ -49,7 +49,7 @@ $(function() {
 	});
 
 	$("#movie-list").on("click", "a", function(){
-		$.get("/api/get-movie", $(this).text(), function(data) {
+		$.get("/api/get-movie?name=" + $(this).text(), function(data) {
 			var allWords = getAllWords(data);
 			seriesArray = [];
 			for(word in allWords){
@@ -83,74 +83,32 @@ $(function() {
 				},
 				tooltip: {
 					valueDecimals: 4
-				}
-			});
-		});
-	})
-
-	function removeRareWords(data) {
-
-	}
-
-	$.get("/api/get-movie?name=500%20Days%20of%20Summer", function(data) {
-		var allWords = getAllWords(data);
-		seriesArray = [];
-		for(word in allWords){
-			series = makeSeries(data, allWords[word]);
-			seriesArray.push(series);
-		}
-		console.log(seriesArray);
-		$('#chart').highcharts({
-			chart: {
-				zoomType: 'xy',
-				type: 'spline'
-			},
-			title: {
-				text: ''
-			},
-			xAxis: {
-				title: {
-					text: 'Minute'
-				}
-			},
-			yAxis: {
-				title: {
-					text: 'Probability'
-				}
-			},
-			series: seriesArray,
-			legend: {
-				align: "right",
-				layout: "vertical",
-				verticalAlign: "top"
-			},
-			tooltip: {
-				valueDecimals: 4
-			}/*,
-			plotOptions: {
-				series: {
-					events: {
-						legendItemClick: function(event) {
-							if (!this.visible)
-								return false;
-
-							var seriesIndex = this.index;
-							var series = this.chart.series;
-
-							for (var i = 0; i < series.length; i++)
-							{
-								if (series[i].index != seriesIndex)
+				},
+				plotOptions: {
+					series: {
+						events: {
+							legendItemClick: function(event) {
+								if (!this.visible)
+									return false;
+	
+								var seriesIndex = this.index;
+								var series = this.chart.series;
+	
+								for (var i = 0; i < series.length; i++)
 								{
-									series[i].visible ?
-									series[i].hide() :
-									series[i].show();
-								} 
+									if (series[i].index != seriesIndex)
+									{
+										series[i].visible ?
+										series[i].hide() :
+										series[i].show();
+									} 
+								}
+								return false;
 							}
-							return false;
 						}
 					}
 				}
-			}*/
+			});
 		});
 	});
 });
