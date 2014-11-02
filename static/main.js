@@ -58,9 +58,12 @@ $(function() {
 		}
 	});
 
-	$("#movie-list").on("click", "a", function(){
+	$("#upload-movie").click(function ()) {
 		$("#upload-movie").hide();
-		$("#loading").show();
+		$("#loading").show();	
+	})
+	
+	$("#movie-list").on("click", "a", function(){
 		var text = $(this).text();
 		$.get("/api/get-movie?name=" + text, function(data) {
 			$("#chart-title").text(text);
