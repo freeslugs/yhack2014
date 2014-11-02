@@ -9,6 +9,21 @@ $(function() {
 	})
 
 
+	if(getParameterByName('notice')) {
+		// $('#myModal').modal('show');
+		alert("we received your video, and it will be available shortly.")
+	}
+
+	function getParameterByName(name) {
+	    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+	        results = regex.exec(location.search);
+	    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
+
+
+
+
 	// Sort scaled data
 	function sortByX(a, b) {
 		if (a.x > b.x) {
@@ -58,9 +73,12 @@ $(function() {
 		}
 	});
 
-	$("#movie-list").on("click", "a", function(){
+	$("#upload-movie").click(function ()) {
 		$("#upload-movie").hide();
-		$("#loading").show();
+		$("#loading").show();	
+	})
+	
+	$("#movie-list").on("click", "a", function(){
 		var text = $(this).text();
 		$.get("/api/get-movie?name=" + text, function(data) {
 			$("#chart-title").text(text);
