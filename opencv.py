@@ -30,7 +30,7 @@ def extract_tags(filename, interval=2):
 
 			imgs.append(tags)
 
-			print '.',
+			print '#'
 
 		i += 1
 
