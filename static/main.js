@@ -71,6 +71,7 @@ $(function() {
 		for (each in data) {
 			$("#movie-list").append("<li role=\"presentation\"><a role=\"menuitem\" class=\"movie-option\" tabindex=\"-1\">"+data[each]+"</a></li>")	
 		}
+		console.log('ready')
 	});
 
 	$("#upload-movie").click(function() {
@@ -122,8 +123,10 @@ $(function() {
 					series: {
 						events: {
 							legendItemClick: function(event) {
-								if (!this.visible)
+								if (!this.visible){
+									this.show();
 									return false;
+								}
 	
 								var seriesIndex = this.index;
 								var series = this.chart.series;
