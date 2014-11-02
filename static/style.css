@@ -1,0 +1,15 @@
+h1 {
+	text-align: center;
+}
+
+#chart {
+	height: 600px; 
+}
+
+#select-div, #upload-div {
+	display: inline-block;
+}
+
+#buttons {
+	margin: auto;
+}

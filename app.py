@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 from flask import Flask, request
 from flask.ext import restful
 from flask.ext.mongoengine import *
@@ -9,6 +10,7 @@ from werkzeug.exceptions import BadRequestKeyError
 
 app = Flask(__name__)
 cors = CORS(app)
+
 app.debug = True
 app.config["MONGODB_SETTINGS"] = {'DB': "yhacks"}
 connect('yhacks', host='mongodb://admin:columbia@ds047940.mongolab.com:47940/yhacks')
@@ -64,9 +66,14 @@ class AddMovie(restful.Resource):
 			return {"Success": "Request submitted"}
 		return {"error": "Movie already exists"}
 
+class MovieList(restful.Resource):
+	def get(self):
+		return ["The Godfather", "The Lord of the Rings", "Shrek"]
+
 api.add_resource(GetMovie, "/api/get-movie")
 api.add_resource(GetMovies, "/api/movies")
 api.add_resource(AddMovie, "/api/add-movie")
+api.add_resource(MovieList, "/api/movie-list")
 
 if __name__ == "__main__":
 	app.run()
