@@ -30,7 +30,7 @@ $(function() {
 			obj = arr[frame];
 			if(word in obj) {
 				data.push({
-					"x": Math.floor(_.indexOf(arr, obj) * 3.3333333)/100,
+					"x": frame / 6,
 					"y": obj[word]
 				});
 			}
