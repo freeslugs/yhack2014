@@ -14,7 +14,7 @@ cors = CORS(app)
 app.debug = True
 app.config["MONGODB_SETTINGS"] = {'DB': "yhacks"}
 connect('yhacks', host='mongodb://admin:columbia@ds047940.mongolab.com:47940/yhacks')
-#app.config.from_pyfile('settings.py')
+# connect('yhacks')
 
 api = restful.Api(app)
 

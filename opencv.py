@@ -30,6 +30,8 @@ def extract_tags(filename, interval=2):
 
 			imgs.append(tags)
 
+			print '.',
+
 		i += 1
 
 	cap.release()

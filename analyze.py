@@ -20,5 +20,6 @@ def remove_outliers(imgs, tolerance=10):
 			if key in top:
 				new_img[key] = img[key]
 		new_imgs.append(new_img)
-		
+
 	return new_imgs
+
