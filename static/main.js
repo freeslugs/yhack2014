@@ -1,6 +1,7 @@
 $(function() {
 
 	$("#app").hide()
+	$("#loading").hide();
 	
 	$("#party-button").click(function () {
 		$("#landing-page").hide()
@@ -58,6 +59,8 @@ $(function() {
 	});
 
 	$("#movie-list").on("click", "a", function(){
+		$("#upload-movie").hide();
+		$("#loading").show();
 		var text = $(this).text();
 		$.get("/api/get-movie?name=" + text, function(data) {
 			$("#chart-title").text(text);

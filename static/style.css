@@ -74,6 +74,7 @@
 }
 #tags-app {
 	display: inline-block;
+	min-width: 300px;
 }
 #tags-app input {
 	max-width: 200px;
